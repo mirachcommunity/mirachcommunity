@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mirach Community",
-  description: "Komunitas pemrogrammer Indonesia",
+  description: "Komunitas programmer Indonesia",
 };
 
 export default function RootLayout({
@@ -39,7 +41,20 @@ export default function RootLayout({
           speed={200}
           shadow="0 0 10px #3B96E7,0 0 5px #C500D0"
         />
-        {children}
+
+        <section className="flex flex-col h-full">
+          <section className="h-full flex-col flex bg-white w-full text-black">
+
+          <Header />
+          
+          <main>
+            {children}
+          </main>
+          
+          <Footer />
+        
+          </section>
+        </section>
       </body>
     </html>
   );
