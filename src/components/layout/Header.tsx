@@ -39,14 +39,14 @@ export default function Header() {
 
         {/* Desktop Buttons */}
         <div className="hidden lg:flex space-x-4">
-          <Link href="/login">
+          <Link href="/auth/login">
             <button className="bg-[#FDD3FF] hover:bg-[#A200B4] text-[#C500D0] hover:text-white font-medium py-1 px-4 rounded-lg transition-colors duration-300">
-              Login
+              Masuk
             </button>
           </Link>
-          <Link href="/signup">
+          <Link href="/auth/register">
             <button className="bg-[#C500D0] hover:bg-[#8A009B] text-white font-medium py-1 px-4 rounded-lg transition-colors duration-300">
-              Sign Up
+              Daftar
             </button>
           </Link>
         </div>
@@ -73,14 +73,14 @@ export default function Header() {
             </Link>
           ))}
           <div className={`pt-2 border-t mt-2 transition-all duration-300 ${isOpen ? "transform translate-y-0 opacity-100" : "transform translate-y-4 opacity-0"} ${isOpen ? "delay-350" : ""}`}>
-            <Link href="/login" onClick={() => setIsOpen(false)}>
+            <Link href="/auth/login" onClick={() => setIsOpen(false)}>
               <button className="w-full bg-[#FDD3FF] hover:bg-[#A200B4] text-[#C500D0] hover:text-white font-medium py-2 rounded-lg transition-colors duration-300 mb-2">
-                Login
+                Masuk
               </button>
             </Link>
-            <Link href="/signup" onClick={() => setIsOpen(false)}>
+            <Link href="/auth/register" onClick={() => setIsOpen(false)}>
               <button className="w-full bg-[#C500D0] hover:bg-[#8A009B] text-white font-medium py-2 rounded-lg transition-colors duration-300">
-                Sign Up
+                Daftar
               </button>
             </Link>
           </div>

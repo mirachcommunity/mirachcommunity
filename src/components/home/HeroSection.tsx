@@ -37,7 +37,7 @@ export default function HeroSection() {
 
               {/* Button alternative */}
               <div className="flex justify-center lg:justify-start">
-                <Link href="/signup">
+                <Link href="/auth/register">
                   <button className="bg-[#A200B4] hover:bg-[#8A009B] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-300 text-sm border-1 border-white hover:border-[#FFF600] flex items-center gap-2">
                     Bergabung Sekarang
                     <ArrowRightIcon className="w-4 h-4 text-white" />
