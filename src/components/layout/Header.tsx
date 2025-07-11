@@ -25,7 +25,7 @@ export default function Header() {
           alt="Mirach Community Logo"
           width={150}
           height={50}
-          className="h-15 md:h-20 w-auto"
+          className="h-12 md:h-16 w-auto"
         />
 
         {/* Desktop Nav */}
@@ -53,11 +53,15 @@ export default function Header() {
 
         {/* Burger Icon */}
         <div className="block lg:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-[#C500D0] focus:outline-none">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="relative z-20 p-1 rounded-lg bg-gray-100 text-[#C500D0] transition-all duration-200 ease-in-out hover:bg-gray-200 active:scale-95 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-[#C500D0]"
+            aria-label="Toggle menu"
+          >
             {isOpen ? (
-              <XMarkIcon className="w-10 h-10" />
+              <XMarkIcon className="w-5 h-5" />
             ) : (
-              <Bars3BottomRightIcon className="w-10 h-10" />
+              <Bars3BottomRightIcon className="w-5 h-5" />
             )}
           </button>
         </div>
@@ -68,7 +72,7 @@ export default function Header() {
       >
         <nav className={`flex flex-col space-y-4 py-4 font-medium transition-all duration-300 ${isOpen ? "delay-75" : ""}`}>
           {navLinks.map((link) => (
-             <Link key={link.href} href={link.href} className="hover:text-[#C500D0] transition-colors" onClick={() => setIsOpen(false)}>
+            <Link key={link.href} href={link.href} className="hover:text-[#C500D0] transition-colors" onClick={() => setIsOpen(false)}>
               {link.label}
             </Link>
           ))}
