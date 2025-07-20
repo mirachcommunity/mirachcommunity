@@ -3,13 +3,49 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { loginUser, redirectToGoogleAuth } from '@/services/auth';
+import { isAxiosError } from 'axios';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [formError, setFormError] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrors({});
+    setFormError('');
+    setIsSubmitting(true);
+
+    try {
+      await loginUser({ email, password });
+      router.push('/auth/dashboard');
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const serverError = error.response?.data;
+        if (serverError && serverError.errors) {
+          setErrors(serverError.errors);
+        } else {
+          setFormError(serverError?.message || 'Terjadi kesalahan saat mendaftar.');
+        }
+      } else {
+        setFormError('Tidak dapat terhubung ke server. Coba lagi nanti.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -41,38 +77,48 @@ export default function Login() {
             <p className="text-gray-500 mt-2">Silakan masukkan detail akun Anda.</p>
           </div>
 
-          <form className="space-y-5">
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="Alamat Email"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
-              />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="Alamat Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
+                />
+              </div>
+              {errors.name && <p className="text-red-500 text-xs mt-1 pl-1">{errors.name}</p>}
             </div>
 
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                autoComplete="current-password"
-                required
-                placeholder="Password"
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
-              />
-              <button
-                type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-              </button>
+            <div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
+                  required
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg hide-password-toggle focus:outline-none focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+              {errors.password && <p className="text-red-500 text-xs mt-1 pl-1">{errors.password}</p>}
             </div>
 
             <div className="flex items-center justify-end">
@@ -83,10 +129,15 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full bg-[#C500D0] hover:bg-[#A200B4] text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+              disabled={isSubmitting}
+              className="w-full bg-[#C500D0] hover:bg-[#A200B4] text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Masuk
+              {isSubmitting ? 'Mencoba masuk...' : 'Masuk'}
             </button>
+
+            {/* Error Umum */}
+            {formError && <p className="text-red-500 text-sm text-center">{formError}</p>}
+
           </form>
 
           <div className="flex items-center my-6">
@@ -97,15 +148,18 @@ export default function Login() {
 
           {/* --- [PERUBAHAN DI SINI] --- */}
           <div className="flex items-center justify-center space-x-4">
-            <button type="button" className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all">
+            <button
+              type="button"
+              onClick={redirectToGoogleAuth}
+              className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg cursor-pointer transition-all">
               <Image src="/icons/social/google.svg" alt="Google" width={24} height={24} />
             </button>
-            
-            <button type="button" className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all">
+
+            <button type="button" className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg cursor-pointer transition-all">
               <Image src="/icons/social/facebook.svg" alt="Facebook" width={24} height={24} />
             </button>
-            
-            <button type="button" className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all">
+
+            <button type="button" className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg cursor-pointer transition-all">
               <Image src="/icons/social/apple.svg" alt="Apple" width={24} height={24} />
             </button>
           </div>
