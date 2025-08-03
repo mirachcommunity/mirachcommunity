@@ -2,53 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
-import { isAxiosError } from 'axios';
-import { registerUser, redirectToGoogleAuth } from '@/services/auth';
+import React from 'react';
+import { redirectToGoogleAuth } from '@/services/auth';
+import RegisterForm from '@/components/auth/RegisterForm';
 
 export default function Register() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [formError, setFormError] = useState('');
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrors({});
-    setFormError('');
-    setIsSubmitting(true);
-
-    try {
-      await registerUser({ name, email, password });
-      router.push('/auth/login');
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const serverError = error.response?.data;
-        if (serverError && serverError.errors) {
-          setErrors(serverError.errors);
-        } else {
-          setFormError(serverError?.message || 'Terjadi kesalahan saat mendaftar.');
-        }
-      } else {
-        setFormError('Tidak dapat terhubung ke server. Coba lagi nanti.');
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="flex min-h-screen bg-white">
       {/* Kolom Kiri - Informasi & Branding */}
@@ -77,84 +35,8 @@ export default function Register() {
             <p className="text-gray-500 mt-2">Satu langkah lagi untuk memulai petualanganmu.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Input Name */}
-            <div>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  placeholder="Nama"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
-                />
-              </div>
-              {errors.name && <p className="text-red-500 text-xs mt-1 pl-1">{errors.name}</p>}
-            </div>
-
-            {/* Input Email */}
-            <div>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="Alamat Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
-                />
-              </div>
-              {errors.email && <p className="text-red-500 text-xs mt-1 pl-1">{errors.email}</p>}
-            </div>
-
-            {/* Input Password */}
-            <div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="new-password"
-                  required
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg hide-password-toggle focus:outline-none focus:ring-2 focus:ring-[#C500D0] focus:border-transparent transition-all"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
-              </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1 pl-1">{errors.password}</p>}
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[#C500D0] hover:bg-[#A200B4] text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? 'Mendaftarkan...' : 'Daftar'}
-            </button>
-
-            {/* Error Umum */}
-            {formError && <p className="text-red-500 text-sm text-center">{formError}</p>}
-
-          </form>
-
+          <RegisterForm />
+          
           <div className="flex items-center my-6">
             <hr className="flex-grow border-t border-gray-200" />
             <span className="mx-4 text-sm font-medium text-gray-400">atau daftar dengan</span>
