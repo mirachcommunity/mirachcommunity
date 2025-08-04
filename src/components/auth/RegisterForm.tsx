@@ -1,56 +1,30 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
-import { isAxiosError } from 'axios';
 import { registerUser } from '@/services/auth';
-import { Input } from '../ui/Input';
+import { Input } from '@/components/ui/Input';
+import { useForm } from '@/hooks/useForm';
+import { Button } from '@/components/ui/Button';
 
 export default function Register() {
+
+  const {
+    formData,
+    isSubmitting,
+    formError,
+    errors,
+    handleChange,
+    handleSubmit,
+  } = useForm({name: '', email: '', password: ''}, registerUser, '/auth/login')
+
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [formError, setFormError] = useState('');
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrors({});
-    setFormError('');
-    setIsSubmitting(true);
-
-    try {
-      await registerUser({ name, email, password });
-      router.push('/auth/login');
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const serverError = error.response?.data;
-        if (serverError && serverError.errors) {
-          setErrors(serverError.errors);
-        } else {
-          setFormError(serverError?.message || 'Terjadi kesalahan saat mendaftar.');
-        }
-      } else {
-        setFormError('Tidak dapat terhubung ke server. Coba lagi nanti.');
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Input Name */}
       <Input
         Icon={User}
         id="name"
@@ -59,12 +33,11 @@ export default function Register() {
         autoComplete="name"
         required
         placeholder="Nama"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={formData.name}
+        onChange={handleChange}
         error={errors.name}
       />
 
-      {/* Email */}
       <Input
         Icon={Mail}
         id="email"
@@ -73,12 +46,11 @@ export default function Register() {
         autoComplete="email"
         required
         placeholder="Alamat Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formData.email}
+        onChange={handleChange}
         error={errors.email}
       />
 
-      {/* Password */}
       <Input
         Icon={Lock}
         id="password"
@@ -87,8 +59,8 @@ export default function Register() {
         autoComplete="current-password"
         required
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.password}
+        onChange={handleChange}
         rightIcon={
           <button
             type="button"
@@ -101,17 +73,17 @@ export default function Register() {
         error={errors.password}
       />
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-[#C500D0] hover:bg-[#A200B4] text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+      <Button
+        type="submit" 
+        isSubmitting={isSubmitting} 
+        submittingText="Mendaftarkan..."
       >
-        {isSubmitting ? 'Mendaftarkan...' : 'Daftar'}
-      </button>
+        Daftar
+      </Button>
 
-      {/* Error Umum */}
-      {formError && <p className="text-red-500 text-sm text-center">{formError}</p>}
-
+      {formError && (
+        <p className="text-red-500 text-sm text-center">{formError}</p>
+      )}
     </form>
   );
 }

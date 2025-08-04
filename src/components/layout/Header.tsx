@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { Button } from '@/components/ui/Button';
 import { Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/solid"
 
 export default function Header() {
@@ -40,14 +41,14 @@ export default function Header() {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex space-x-4">
           <Link href="/auth/login">
-            <button className="bg-[#FDD3FF] hover:bg-[#A200B4] text-[#C500D0] hover:text-white font-medium py-1 px-4 rounded-lg transition-colors duration-300">
+            <Button variant="secondary" size="sm" className="mt-0">
               Masuk
-            </button>
+            </Button>
           </Link>
           <Link href="/auth/register">
-            <button className="bg-[#C500D0] hover:bg-[#8A009B] text-white font-medium py-1 px-4 rounded-lg transition-colors duration-300">
+            <Button variant="primary" size="sm" className="mt-0">
               Daftar
-            </button>
+            </Button>
           </Link>
         </div>
 
