@@ -29,3 +29,12 @@ body {
 .hide-password-toggle::-ms-clear {
   display: none;
 }
+
+/* Custom SweetAlert2 Progress Bar Colors */
+.swal2-progress-bar-success {
+  background: #28a745 !important;
+}
+
+.swal2-progress-bar-error {
+  background: #d33 !important;
+}

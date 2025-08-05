@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "sweetalert2/dist/sweetalert2.min.css";
 import NextTopLoader from "nextjs-toploader";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";

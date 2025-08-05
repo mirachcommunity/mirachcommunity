@@ -13,11 +13,10 @@ export default function LoginForm() {
   const {
     formData,
     isSubmitting,
-    formError,
     errors,
     handleChange,
     handleSubmit,
-  } = useForm({ email: '', password: '' }, loginUser, '/auth/dashboard');
+  } = useForm({ email: '', password: '' }, loginUser, 'Login berhasil!', '/auth/dashboard');
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -77,10 +76,6 @@ export default function LoginForm() {
       >
         Masuk
       </Button>
-
-      {formError && (
-        <p className="text-red-500 text-sm text-center">{formError}</p>
-      )}
     </form>
   );
 }

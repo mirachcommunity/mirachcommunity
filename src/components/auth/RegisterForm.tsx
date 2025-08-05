@@ -12,11 +12,10 @@ export default function Register() {
   const {
     formData,
     isSubmitting,
-    formError,
     errors,
     handleChange,
     handleSubmit,
-  } = useForm({name: '', email: '', password: ''}, registerUser, '/auth/login')
+  } = useForm({name: '', email: '', password: ''}, registerUser, 'Verifikasi email berhasil terkirim ke email anda', '/auth/login')
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -80,10 +79,6 @@ export default function Register() {
       >
         Daftar
       </Button>
-
-      {formError && (
-        <p className="text-red-500 text-sm text-center">{formError}</p>
-      )}
     </form>
   );
 }
