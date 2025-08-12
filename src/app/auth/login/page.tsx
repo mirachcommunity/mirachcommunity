@@ -1,8 +1,7 @@
 'use client'
 
 import LoginForm from '@/components/auth/LoginForm';
-import { redirectToGoogleAuth } from '@/services/auth';
-import Image from 'next/image';
+import SocialLinks from '@/components/auth/SocialLinks';
 import Link from 'next/link';
 
 export default function Login() {
@@ -50,27 +49,7 @@ export default function Login() {
           </div>
 
           {/* Social login */}
-          <div className="flex items-center justify-center space-x-4">
-            <button
-              type="button"
-              onClick={redirectToGoogleAuth}
-              className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg cursor-pointer transition-all"
-            >
-              <Image src="/icons/social/google.svg" alt="Google" width={24} height={24} />
-            </button>
-            <button
-              type="button"
-              className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg cursor-pointer transition-all"
-            >
-              <Image src="/icons/social/facebook.svg" alt="Facebook" width={24} height={24} />
-            </button>
-            <button
-              type="button"
-              className="p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg cursor-pointer transition-all"
-            >
-              <Image src="/icons/social/apple.svg" alt="Apple" width={24} height={24} />
-            </button>
-          </div>
+          <SocialLinks text="atau lanjutkan dengan" />
 
           {/* Register link */}
           <p className="mt-8 text-center text-sm text-gray-600">
