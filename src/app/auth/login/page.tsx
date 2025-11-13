@@ -39,15 +39,6 @@ export default function Login() {
 
           <LoginForm />
 
-          {/* Divider */}
-          <div className="flex items-center my-6">
-            <hr className="flex-grow border-t border-gray-200" />
-            <span className="mx-4 text-sm font-medium text-gray-400">
-              atau lanjutkan dengan
-            </span>
-            <hr className="flex-grow border-t border-gray-200" />
-          </div>
-
           {/* Social login */}
           <SocialLinks text="atau lanjutkan dengan" />
 

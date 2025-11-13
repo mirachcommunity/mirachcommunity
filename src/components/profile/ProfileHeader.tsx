@@ -11,7 +11,7 @@ export default function ProfileHeader({ slug }: ProfileHeaderProps) {
       <div className="relative">
         <div className="h-48 bg-gray-200 rounded-t-lg relative">
           <Image
-            src="/images/program-1.png"
+            src="/images/users/banner/default.jpg"
             alt="Banner Profil"
             layout="fill"
             objectFit="cover"
@@ -22,7 +22,7 @@ export default function ProfileHeader({ slug }: ProfileHeaderProps) {
         <div className="absolute -bottom-16 left-6">
           <div className="w-32 h-32 rounded-full border-4 border-white bg-gray-300 relative overflow-hidden">
             <Image
-              src="/images/about.png"
+              src="/images/users/profile/default.png"
               alt="Foto Profil"
               layout="fill"
               objectFit="cover"
