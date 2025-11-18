@@ -6,6 +6,8 @@ import AboutMeWidget from "@/components/profile/widget/AboutMeWidget";
 import BadgeWidget from "@/components/profile/widget/BadgeWidget";
 import CertificateWidget from "@/components/profile/widget/CertificateWidget";
 import { Button } from "@/components/ui/Button";
+import { getProfileByUsername } from "@/services/profile";
+import notFound from "@/app/not-found";
 
 const mockFeedData = [
   {
@@ -37,15 +39,21 @@ export default async function Profile({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  
+  const user = await getProfileByUsername(slug);
+
+  if (!user) {
+    return notFound();
+  }
 
   return (
     <div className="flex gap-4 bg-gray-100 min-h-screen py-8 px-6 sm:px-12 md:px-20">
       <main className="flex-3">
-        <ProfileHeader slug={slug} />
+        <ProfileHeader user={user} />
         
         <div className="flex gap-4">
           <aside className="flex-1 space-y-4 h-fit">
-            <AboutMeWidget />
+            <AboutMeWidget user={user} />
             <BadgeWidget />
             <CertificateWidget />
             <Button variant="primary" size="md">Donasi Rp.1.230.000,-</Button>

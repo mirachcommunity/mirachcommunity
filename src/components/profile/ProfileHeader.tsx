@@ -1,11 +1,16 @@
 import Image from "next/image";
 import { Button } from "../ui/Button";
+import { UserProfile } from "@/services/profile"; 
 
 interface ProfileHeaderProps {
-  slug: string;
+  user: UserProfile;
 }
 
-export default function ProfileHeader({ slug }: ProfileHeaderProps) {
+export default function ProfileHeader({ user }: ProfileHeaderProps) {
+  const { username, profile } = user;
+
+  
+
   return (
     <div className="bg-white rounded-lg shadow-sm mb-4">
       <div className="relative">
@@ -39,8 +44,8 @@ export default function ProfileHeader({ slug }: ProfileHeaderProps) {
       </div>
 
       <div className="px-6 pb-6">
-        <h1 className="text-2xl font-bold">{slug}</h1>
-        <p className="text-gray-600 pb-2">Software Engineer at Mirach Community</p>
+        <h1 className="text-2xl font-bold">{username}</h1>
+        <p className="text-gray-600 pb-2">{profile.bio}</p>
         <p className="text-sm text-gray-400">Depok, Jawa Barat, Indonesia</p>
       </div>
     </div>
