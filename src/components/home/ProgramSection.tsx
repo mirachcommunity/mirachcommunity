@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import Container from "../ui/Container";
 
 export default function ProgramSection() {
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-20 max-w-[1440px]">
+    <Container className="py-16">
       <h2 className="text-2xl md:text-3xl font-bold mb-10 relative inline-block">
         <span className="relative z-10">
           Program <span className="text-[#C500D0]">Mirach Community</span>
@@ -83,6 +84,6 @@ export default function ProgramSection() {
           </div>
         </div>
       </div>
-    </section>
+    </Container>
   )
 };

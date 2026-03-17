@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Container from "../ui/Container";
 
 export default function AboutSection() {
   return (
@@ -16,7 +17,7 @@ export default function AboutSection() {
       </div>
 
       {/* Content */}
-      <section className="text-white py-16 px-6 sm:px-12 md:px-20 relative z-10">
+      <Container className="text-white py-16 relative z-10">
         <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center gap-8">
           {/* Kiri - Text */}
           <div className="flex-1">
@@ -66,7 +67,7 @@ export default function AboutSection() {
             </div>
           </div>
         </div>
-      </section>
+      </Container>
     </section>
   )
 };

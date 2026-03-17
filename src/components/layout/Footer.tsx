@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import Container from "../ui/Container";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1F2B32] text-white py-10 px-4 sm:px-8 md:px-20">
-      <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-
+    <footer className="bg-[#1F2B32] text-white">
+      <Container className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start py-12">
         {/* Kiri - Logo dan Hak Cipta */}
         <div>
           <Image
@@ -54,7 +54,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 };
