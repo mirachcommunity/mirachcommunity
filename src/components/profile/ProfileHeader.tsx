@@ -7,9 +7,7 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ user }: ProfileHeaderProps) {
-  const { username, profile } = user;
-
-  
+  const { profile } = user;
 
   return (
     <div className="bg-white rounded-lg shadow-sm mb-4">
@@ -44,7 +42,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
       </div>
 
       <div className="px-6 pb-6">
-        <h1 className="text-2xl font-bold">{username}</h1>
+        <h1 className="text-2xl font-bold">{profile.name}</h1>
         <p className="text-gray-600 pb-2">{profile.bio}</p>
         <p className="text-sm text-gray-400">Depok, Jawa Barat, Indonesia</p>
       </div>

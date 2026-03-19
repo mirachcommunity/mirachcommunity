@@ -6,14 +6,15 @@ interface AboutMeWidgetProps {
 }
 
 export default function AboutMeWidget({ user }: AboutMeWidgetProps) {
-  
-  const birthday = user.profile.dateOfBirth 
-    ? new Date(user.profile.dateOfBirth).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+  const { profile } = user;
+
+  profile.dateOfBirth = profile.dateOfBirth 
+    ? new Date(profile.dateOfBirth).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
     : '-';
 
   const aboutData = {
-    gender: '-', // API endpoint saat ini belum menyediakan gender
-    birthday: birthday,
+    gender: 'Pria', // API endpoint saat ini belum menyediakan gender
+    birthday: profile.dateOfBirth,
     location: 'Indonesia', // API endpoint saat ini belum menyediakan lokasi
     email: user.email,
     phone: '-', // API endpoint saat ini belum menyediakan phone
@@ -40,7 +41,7 @@ export default function AboutMeWidget({ user }: AboutMeWidgetProps) {
 
         <div className="flex items-center gap-3">
           {iconMap.birthday}
-          <span className="text-sm text-gray-700">{aboutData.birthday}</span>
+          <span className="text-sm text-gray-700">{profile.dateOfBirth}</span>
         </div>
         <hr className="border-gray-100" />
 
@@ -58,7 +59,7 @@ export default function AboutMeWidget({ user }: AboutMeWidgetProps) {
 
         <div className="flex items-center gap-3">
           {iconMap.phone}
-          <span className="text-sm text-gray-700">{aboutData.phone}</span>
+          <span className="text-sm text-gray-700">{profile.phone}</span>
         </div>
       </div>
     </div>

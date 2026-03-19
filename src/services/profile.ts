@@ -6,6 +6,9 @@ export interface UserProfile {
   username: string;
   profile: {
     id: string;
+    name: string;
+    email: string;
+    phone: string;
     bio: string;
     dateOfBirth: string | null;
     avatarUrl: string;
