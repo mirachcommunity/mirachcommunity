@@ -4,10 +4,11 @@ import Link from 'next/link';
 import React from 'react';
 import RegisterForm from '@/components/auth/RegisterForm';
 import SocialLinks from '@/components/auth/SocialLinks';
+import Container from '@/components/ui/Container';
 
 export default function Register() {
   return (
-    <div className="flex min-h-screen bg-white">
+    <Container className="flex min-h-screen !px-0 sm:!px-0 md:!px-0">
       {/* Kolom Kiri - Informasi & Branding */}
       <div className="hidden lg:flex flex-col w-1/2 items-center justify-center bg-gradient-to-br from-[#C500D0] to-[#A200B4] p-12 text-white relative overflow-hidden">
         {/* Elemen dekoratif */}
@@ -47,6 +48,6 @@ export default function Register() {
           </p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

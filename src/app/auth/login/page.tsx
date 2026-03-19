@@ -3,10 +3,11 @@
 import LoginForm from '@/components/auth/LoginForm';
 import SocialLinks from '@/components/auth/SocialLinks';
 import Link from 'next/link';
+import Container from '@/components/ui/Container';
 
 export default function Login() {
   return (
-    <div className="flex min-h-screen bg-white">
+    <Container className="flex min-h-screen !px-0 sm:!px-0 md:!px-0">
       {/* Kolom Kiri - Informasi yang Ditingkatkan */}
       <div className="hidden lg:flex flex-col w-1/2 items-center justify-center bg-gradient-to-br from-[#C500D0] to-[#A200B4] p-12 text-white relative overflow-hidden">
         {/* Elemen dekoratif */}
@@ -28,7 +29,6 @@ export default function Login() {
 
       {/* Kolom Kanan - Form Masuk */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
-
         <div className="max-w-md w-full">
           <div className="text-left mb-10">
             <h2 className="text-4xl font-bold text-gray-900">Masuk Akun</h2>
@@ -54,6 +54,6 @@ export default function Login() {
           </p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
